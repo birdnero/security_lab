@@ -1,0 +1,38 @@
+html {
+  scrollbar-color: #cf0f57 #1a1b22;
+  scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: #15161c;
+  border-left: 1px solid #2b2c35;
+}
+
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #cf0f57 0%, #8a0f3b 100%);
+  border: 2px solid #15161c;
+  border-radius: 0;
+}
+
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff5d96 0%, #b30f4a 100%);
+}
+
+body::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner {
+  background: #15161c;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}

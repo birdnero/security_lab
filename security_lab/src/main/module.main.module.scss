@@ -1,0 +1,160 @@
+@use "../styles/color";
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+.page {
+  min-height: 100vh;
+  padding: 28px 14px 44px;
+  background:
+    linear-gradient(160deg, rgba(255, 24, 95, 0.18) 0%, transparent 42%),
+    linear-gradient(24deg, rgba(255, 24, 95, 0.1) 0%, transparent 55%),
+    radial-gradient(circle at 90% 8%, rgba(255, 24, 95, 0.24) 0%, transparent 30%),
+    linear-gradient(140deg, color.$color-bg-deep 0%, color.$color-bg-mid 58%, #121317 100%);
+  font-family: "Chakra Petch", "Segoe UI", sans-serif;
+}
+
+.hero {
+  max-width: 1060px;
+  margin: 0 auto 16px;
+  color: color.$color-text-on-dark;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid color.$color-border-strong;
+  padding: 6px 10px;
+  background: color.$color-chip-bg;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 12px 0 8px;
+  font-size: clamp(30px, 6vw, 56px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: 0;
+  max-width: 780px;
+  color: color.$color-text-muted-on-dark;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.ctn{
+  max-width: 1060px;
+  margin: 0 auto;
+  border: 1px solid color.$color-border-strong;
+  background: linear-gradient(135deg, color.$color-surface 0%, color.$color-surface-2 100%);
+  box-shadow: color.$shadow-elevated;
+  padding: 18px;
+}
+
+.panel {
+  border: 1px solid color.$color-border;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+  padding: 14px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: color.$color-text-main;
+}
+
+.sectionText {
+  margin: 0;
+  color: color.$color-text-muted;
+  font-size: 14px;
+}
+
+.mainPanelGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+
+.serverBox {
+  border: 1px solid color.$color-border;
+  background: rgba(0, 0, 0, 0.18);
+  padding: 10px;
+  width: fit-content;
+}
+
+.serverLabel {
+  margin: 0 0 8px;
+  color: color.$color-text-muted;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ipForm {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.ipRow {
+  display: flex;
+  gap: 8px;
+}
+
+.ipOctet {
+  // width: 62px;
+  min-width: 60px;
+  max-width: 5dvw;
+}
+
+.serverHint {
+  margin: 8px 0 0;
+  color: color.$color-text-muted;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+@media (max-width: 780px) {
+  .mainPanelGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tabsCtn {
+  max-width: 1060px;
+  margin: 0 auto 0px;
+  display: flex;
+  align-items: end;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  height: min-content;
+  border: 1px solid color.$color-border;
+  padding: 8px 12px;
+  background: #1a1b22;
+  color: color.$color-text-muted;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tabActive {
+  padding: 12px 12px 8px 12px;
+  border-color: color.$color-accent;
+  color: color.$color-text-on-accent;
+  background: linear-gradient(140deg, color.$color-accent 0%, color.$color-accent-2 100%);
+}
