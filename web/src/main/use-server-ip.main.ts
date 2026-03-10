@@ -1,58 +1,46 @@
 import { useCallback, useMemo, useState } from "react"
 import { API } from "../API"
 import {
-    buildApiUrl,
-    DEFAULT_IP_OCTETS,
-    isValidOctet,
-    parseIpFromUrl,
+    normalizeServerUrl,
     SERVER_URL_STORAGE_KEY,
-    toIpOctets,
-    type IpOctets,
-    normalizeOctet,
+    DEFAULT_API_URL,
 } from "./utils.main"
 
-const getInitialIpOctets = () => {
-    const saved = window.localStorage.getItem(SERVER_URL_STORAGE_KEY) ?? API.url
-    return parseIpFromUrl(saved) ?? parseIpFromUrl(API.url) ?? toIpOctets([...DEFAULT_IP_OCTETS])
+const getInitialServerUrl = () => {
+    const saved = window.localStorage.getItem(SERVER_URL_STORAGE_KEY)
+    const candidate = saved ?? API.url ?? DEFAULT_API_URL
+    return normalizeServerUrl(candidate)
 }
 
-const persistServerIp = (octets: IpOctets) => {
-    const nextUrl = buildApiUrl(octets)
+const persistServerUrl = (nextValue: string) => {
+    const nextUrl = normalizeServerUrl(nextValue)
     API.url = nextUrl
     window.localStorage.setItem(SERVER_URL_STORAGE_KEY, nextUrl)
-}
-
-const sanitizeOctetInput = (value: string) => {
-    const digitsOnly = normalizeOctet(value)
-    if (!digitsOnly) return "0"
-    const clamped = Math.min(255, Math.max(0, Number(digitsOnly)))
-    return String(clamped)
+    return nextUrl
 }
 
 export const useServerIp = () => {
-    const [ipOctets, setIpOctets] = useState<IpOctets>(() => {
-        const initialOctets = getInitialIpOctets()
-        persistServerIp(initialOctets)
-        return initialOctets
+    const [serverUrlInput, setServerUrlInput] = useState(() => {
+        const initialUrl = getInitialServerUrl()
+        API.url = initialUrl
+        return initialUrl
     })
 
-    const ipPreview = useMemo(() => ipOctets.join("."), [ipOctets])
+    const currentUrl = useMemo(() => API.url, [serverUrlInput])
 
-    const updateOctet = useCallback((index: number, value: string) => {
-        setIpOctets((prev) => {
-            const next = [...prev]
-            next[index] = sanitizeOctetInput(value)
-            const nextOctets = toIpOctets(next)
-            if (nextOctets.every(isValidOctet)) {
-                persistServerIp(nextOctets)
-            }
-            return nextOctets
-        })
+    const updateServerUrlInput = useCallback((value: string) => {
+        setServerUrlInput(value)
     }, [])
 
+    const commitServerUrl = useCallback((value?: string) => {
+        const nextUrl = persistServerUrl(value ?? serverUrlInput)
+        setServerUrlInput(nextUrl)
+    }, [serverUrlInput])
+
     return {
-        ipOctets,
-        ipPreview,
-        updateOctet,
+        serverUrlInput,
+        currentUrl,
+        updateServerUrlInput,
+        commitServerUrl,
     }
 }

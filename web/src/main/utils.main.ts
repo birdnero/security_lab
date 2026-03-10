@@ -1,9 +1,7 @@
 export const SERVER_URL_STORAGE_KEY = "security_lab_server_url"
-export const BACKEND_PORT = 8000
-export const DEFAULT_IP_OCTETS = ["127", "0", "0", "1"] as const
+export const DEFAULT_API_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? "https://security-lab-one.vercel.app/"
 export const TAB_NAMES = ["Main", "Random", "Hash"] as const
 
-export type IpOctets = [string, string, string, string]
 export type TabName = typeof TAB_NAMES[number]
 
 const TAB_PATHS: Record<TabName, string> = {
@@ -18,34 +16,30 @@ const TAB_PAGE_TITLES: Record<TabName, string> = {
     Hash: "Speed-light hash evaluator 😈"
 }
 
-export const normalizeOctet = (value: string) => value.replace(/\D/g, "").slice(0, 3)
-
-export const isValidOctet = (value: string) => {
-    if (value.length === 0) return false
-    const n = Number(value)
-    return Number.isInteger(n) && n >= 0 && n <= 255
+const isLikelyLocalHost = (value: string) => {
+    const host = value.split("/")[0] ?? ""
+    if (host === "localhost") return true
+    if (/^127\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(host)) return true
+    if (/^\d{1,3}(\.\d{1,3}){3}(:\d+)?$/.test(host)) return true
+    return false
 }
 
-export const parseIpFromUrl = (value: string): IpOctets | null => {
+const ensureTrailingSlash = (value: string) => (value.endsWith("/") ? value : `${value}/`)
+
+export const normalizeServerUrl = (value: string) => {
+    const raw = value.trim()
+    if (!raw) return DEFAULT_API_URL
+    const withScheme = raw.includes("://")
+        ? raw
+        : `${isLikelyLocalHost(raw) ? "http" : "https"}://${raw}`
     try {
-        const normalized = value.includes("://") ? value : `http://${value}`
-        const host = new URL(normalized).hostname
-        const parts = host.split(".")
-        if (parts.length !== 4 || !parts.every(isValidOctet)) return null
-        return [parts[0], parts[1], parts[2], parts[3]]
+        const url = new URL(withScheme)
+        const path = url.pathname.replace(/\/+$/, "")
+        return ensureTrailingSlash(`${url.origin}${path}`)
     } catch {
-        return null
+        return DEFAULT_API_URL
     }
 }
-
-export const buildApiUrl = (octets: IpOctets) => `http://${octets.join(".")}:${BACKEND_PORT}/`
-
-export const toIpOctets = (octets: string[]): IpOctets => [
-    octets[0] ?? DEFAULT_IP_OCTETS[0],
-    octets[1] ?? DEFAULT_IP_OCTETS[1],
-    octets[2] ?? DEFAULT_IP_OCTETS[2],
-    octets[3] ?? DEFAULT_IP_OCTETS[3],
-]
 
 export const tabPathResolve = (tab: TabName) => TAB_PATHS[tab]
 

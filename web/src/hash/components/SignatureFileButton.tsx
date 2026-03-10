@@ -37,8 +37,8 @@ const SignatureFileButton = ({ disabled }: UploadFileButtonProps) => {
         <label
             className={styles.signatureFileButton}
             htmlFor={inputId}
-            title="Upload file"
-            aria-label="Upload file"
+            title="Upload signature"
+            aria-label="Upload signature"
             aria-disabled={disabled ? "true" : "false"}
         >
             <FileSignatureIcon className={styles.saveIcon} />
