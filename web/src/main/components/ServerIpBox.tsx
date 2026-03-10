@@ -1,33 +1,31 @@
 import Input from "../../shared/input.shared"
 import styles from "../module.main.module.scss"
-import { BACKEND_PORT } from "../utils.main"
 
 type ServerIpBoxProps = {
-    ipOctets: string[]
-    ipPreview: string
-    onOctetChange: (index: number, value: string) => void
+    value: string
+    currentUrl: string
+    onChange: (value: string) => void
+    onCommit: (value?: string) => void
 }
 
-const ServerIpBox = ({ ipOctets, ipPreview, onOctetChange }: ServerIpBoxProps) => {
+const ServerIpBox = ({ value, currentUrl, onChange, onCommit }: ServerIpBoxProps) => {
     return (
         <aside className={styles.serverBox}>
-            <div className={styles.serverLabel}>Server IP / URL (e.g. 127.0.0.1:8000)</div>
+            <div className={styles.serverLabel}>Server URL (e.g. https://security-lab-one.vercel.app/ or http://127.0.0.1:8000/)</div>
             <div className={styles.ipForm}>
-                <div className={styles.ipRow}>
-                    {ipOctets.map((part, index) => (
-                        <div key={index} className={styles.ipOctet}>
-                            <Input
-                                boxed
-                                value={part}
-                                inputMode="numeric"
-                                maxLength={3}
-                                onChange={(e) => onOctetChange(index, e.target.value)}
-                            />
-                        </div>
-                    ))}
-                </div>
+                <Input
+                    boxed
+                    value={value}
+                    inputMode="url"
+                    placeholder="https://security-lab-one.vercel.app/"
+                    onChange={(e) => onChange(e.target.value)}
+                    onBlur={() => onCommit()}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") onCommit()
+                    }}
+                />
             </div>
-            <p className={styles.serverHint}>Current API base URL: http://{ipPreview}:{BACKEND_PORT}/</p>
+            <p className={styles.serverHint}>Current API base URL: {currentUrl}</p>
         </aside>
     )
 }

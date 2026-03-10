@@ -20,7 +20,7 @@ const FileSection = () => {
     return (
         <section className={styles.panel} color-status={compareStatus}>
             <div className={styles.sectionTitle}>File</div>
-            <div className={styles.sectionText}>Upload a file to compute its hash.</div>
+            <div className={styles.sectionText}>Upload a file and optionaly signature to compute its hash.</div>
             <div className={styles.inputGrid}>
                 <div className={styles.uploadZoneWrapper}>
                     <label

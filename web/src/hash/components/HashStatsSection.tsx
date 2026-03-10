@@ -14,7 +14,7 @@ const HashStatsSection = () => {
     return (
         <section className={styles.panel}>
             <div className={styles.sectionTitle}>Speed & Time</div>
-            <div className={styles.sectionText}>Enter the text you want to hash.</div>
+            <div className={styles.sectionText}>Check and test metrics of hashing big data.</div>
             <div className={styles.hashStatsGrid}>
                 <div className={styles.hashStatItem}>
                     <div className={styles.hashStatIconWrap}>

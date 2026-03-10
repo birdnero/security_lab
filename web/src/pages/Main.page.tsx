@@ -9,7 +9,7 @@ import HashPage from "./Hash.page"
 
 const MainPage = () => {
     const { pathname } = useLocation()
-    const { ipOctets, ipPreview, updateOctet } = useServerIp()
+    const { serverUrlInput, currentUrl, updateServerUrlInput, commitServerUrl } = useServerIp()
     const pageTitle = pageTitleResolve(pathname)
 
     return <div className={styles.page}>
@@ -33,9 +33,10 @@ const MainPage = () => {
                             </div>
 
                             <ServerIpBox
-                                ipOctets={ipOctets}
-                                ipPreview={ipPreview}
-                                onOctetChange={updateOctet}
+                                value={serverUrlInput}
+                                currentUrl={currentUrl}
+                                onChange={updateServerUrlInput}
+                                onCommit={commitServerUrl}
                             />
                         </div>
                     </section>} />
