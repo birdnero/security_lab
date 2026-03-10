@@ -7,7 +7,7 @@ const LOG = (obj: Record<string, unknown>) => {
 
 }
 
-const BACKEND_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? "https://security-lab-one.vercel.app/"
+const BACKEND_URL = "https://security-lab-one.vercel.app/"
 const DEV_MODE = import.meta.env.DEV
 
 type QueryPathPart = string | number

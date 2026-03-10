@@ -71,6 +71,14 @@
   color: color.$color-text-main;
 }
 
+.projectTitle {
+  margin: 0 0 10px;
+  font-size: clamp(20px, 3.2vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: color.$color-text-main;
+}
+
 .sectionText {
   margin: 0;
   color: color.$color-text-muted;

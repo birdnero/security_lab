@@ -1,15 +1,15 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
-import ServerIpBox from "../main/components/ServerIpBox"
+// import ServerIpBox from "../main/components/ServerIpBox"
 import Tabs from "../main/components/Tabs"
 import styles from "../main/module.main.module.scss"
-import { useServerIp } from "../main/use-server-ip.main"
+// import { useServerIp } from "../main/use-server-ip.main"
 import { pageTitleResolve } from "../main/utils.main"
 import RandomPage from "./Random.page"
 import HashPage from "./Hash.page"
 
 const MainPage = () => {
     const { pathname } = useLocation()
-    const { serverUrlInput, currentUrl, updateServerUrlInput, commitServerUrl } = useServerIp()
+    // const { serverUrlInput, currentUrl, updateServerUrlInput, commitServerUrl } = useServerIp()
     const pageTitle = pageTitleResolve(pathname)
 
     return <div className={styles.page}>
@@ -28,16 +28,19 @@ const MainPage = () => {
                     <Route path="/" element={<section className={styles.panel}>
                         <div className={styles.mainPanelGrid}>
                             <div>
-                                <div className={styles.sectionTitle}>Main</div>
-                                <p className={styles.sectionText}>Лабораторна з безпеки.</p>
+                                <div className={styles.projectTitle}>Cybersecurity Lab Project</div>
+                                <div className={styles.sectionTitle}>Mission Brief</div>
+                                <p className={styles.sectionText}>Hands-on security experiments, tools, and demos.</p>
                             </div>
 
+                            {/*
                             <ServerIpBox
                                 value={serverUrlInput}
                                 currentUrl={currentUrl}
                                 onChange={updateServerUrlInput}
                                 onCommit={commitServerUrl}
                             />
+                            */}
                         </div>
                     </section>} />
                     <Route path="/random" element={<RandomPage />} />
