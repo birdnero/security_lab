@@ -1,0 +1,530 @@
+@use '../styles/color';
+
+.intro {
+  margin-bottom: 14px;
+  color: color.$color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 12px;
+}
+
+.topGrid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.panel {
+  border: 1px solid color.$color-border;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+  padding: 14px;
+}
+
+.relative {
+  position: relative;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: color.$color-text-main;
+}
+
+.sectionText {
+  margin-bottom: 10px;
+  color: color.$color-text-muted;
+  font-size: 14px;
+}
+
+.inputGrid {
+  display: grid;
+  gap: 10px;
+}
+
+.actions {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.button {
+  border: 1px solid color.$color-accent;
+  padding: 10px 13px;
+  background: linear-gradient(140deg, color.$color-accent 0%, color.$color-accent-2 100%);
+  color: color.$color-text-on-accent;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 200ms;
+
+  &:hover:not(:disabled) {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 color.$color-border-strong;
+  }
+
+  &:active:not(:disabled) {
+    scale: 1.03;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.loading {
+  width: 16px;
+  height: 16px;
+  border: 2px solid color.$color-accent-2;
+  border-top-color: color.$color-accent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.9s linear infinite;
+  position: absolute;
+  left: 12px;
+  bottom: 8px;
+}
+
+.error {
+  margin-top: 8px;
+  color: color.$color-danger;
+  font-weight: 700;
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+}
+
+.resultsGrid {
+  margin-top: 24px;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+@supports (grid-template-rows: masonry) {
+  .resultsGrid {
+    grid-template-rows: masonry;
+  }
+}
+
+@supports not (grid-template-rows: masonry) {
+  .resultsGrid {
+    display: block;
+    columns: 2;
+    column-gap: 24px;
+  }
+
+  .resultsGrid>.panel {
+    break-inside: avoid;
+    margin-bottom: 12px;
+  }
+}
+
+.codeBlock {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: block;
+  margin-top: 8px;
+  border: 1px solid color.$color-border;
+  background: #16161b;
+  color: #ffd5e7;
+  padding: 10px 11px;
+
+  // padding: 8px 9px;
+  min-height: 44px;
+  max-height: 60dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  line-height: 1.5;
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  word-break: break-word;
+  scrollbar-width: thin;
+  scrollbar-color: color.$color-accent #16161b;
+}
+
+.hashOutput {
+  @extend .codeBlock;
+  border-color: color.$color-border;
+  background: linear-gradient(135deg, rgba(207, 15, 87, 0.08), rgba(22, 22, 27, 0.9));
+  box-shadow: inset 0 0 0 1px rgba(207, 15, 87, 0.18);
+  padding: 12px 14px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  word-break: break-all;
+}
+
+.codeBlock::-webkit-scrollbar {
+  width: 6px;
+}
+
+.codeBlock::-webkit-scrollbar-track {
+  background: #16161b;
+}
+
+.codeBlock::-webkit-scrollbar-thumb {
+  background: color.$color-accent;
+  border-radius: 999px;
+}
+
+.statCard {
+  margin-top: 8px;
+  border: 1px solid color.$color-border;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px;
+}
+
+.hashStatsGrid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.hashStatItem {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid color.$color-border;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 10px 12px;
+}
+
+.hashStatIconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.hashStatIcon {
+  width: 24px;
+  height: 24px;
+  // filter: invert(1);
+  opacity: 0.9;
+  color: color.$color-accent;
+}
+
+.hashStatLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  color: color.$color-text-muted;
+}
+
+.hashStatValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: color.$color-text-main;
+}
+
+.hashStatHint {
+  font-size: 12px;
+  color: color.$color-text-muted;
+}
+
+@media (max-width: 880px) {
+  .hashStatsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 880px) {
+
+  .topGrid,
+  .resultsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .resultsGrid {
+    display: block;
+    columns: 1;
+  }
+}
+
+
+.errorCtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  gap: 8px;
+  position: absolute;
+  right: 12px;
+  top: 8px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.textDefault {
+  color: #84808b;
+}
+
+.acccentText {
+  color: color.$color-accent;
+}
+
+.saveFloatingButton {
+  position: absolute;
+  right: -6px;
+  top: 22px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid color.$color-accent;
+  background: linear-gradient(140deg, color.$color-accent 0%, color.$color-accent-2 100%);
+  color: color.$color-text-on-accent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.045);
+  z-index: 40;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+.signatureFileButton {
+  @extend .saveFloatingButton;
+  top: -8px;
+  right: -8px;
+
+  &:hover {
+    transform: translate(0, -1px);
+  }
+}
+
+.saveFloatingButton[aria-disabled="true"] {
+  opacity: 0.6;
+  pointer-events: none;
+  filter: grayscale(0.2);
+}
+
+.saveFloatingButton:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.saveFloatingButton:active {
+  transform: translateY(1px);
+}
+
+.saveIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.uploadZone {
+  width: 100%;
+  border: 1px solid color.$color-border;
+  background: linear-gradient(145deg, hsla(338, 86%, 44%, 0.08), hsla(0, 0%, 100%, 0.02));
+  min-height: 120px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: 200ms;
+  color: color.$color-accent-soft;
+  box-shadow: inset 0 0 0 1px rgba(207, 15, 87, 0.12);
+}
+
+.uploadZoneWrapper {
+  position: relative;
+}
+
+.uploadZoneWrapper:hover .signatureFileButton {
+  transform: translate(-1px, -1px);
+}
+
+.uploadZone:hover,
+.uploadZone[data-dragover="true"] {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px -1px color.$color-border-strong;
+  background: linear-gradient(145deg, hsla(338, 92%, 46%, 0.08), hsla(338, 60%, 80%, 0.04));
+
+  color: color.$color-accent;
+}
+
+.panel[color-status="success"] {
+  border-color: #2fbf71;
+  box-shadow: inset 0 0 48px 3px rgba(47, 191, 113, 0.02);
+  color: #2fbf71;
+}
+
+.panel[color-status="error"] {
+  border-color: color.$color-danger;
+  box-shadow: inset 0 0 48px 3px rgba(255, 79, 111, 0.02);
+  color: color.$color-danger;
+}
+
+.uploadZone[data-blocked="true"] {
+  cursor: wait;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: inset 0 0 0 1px rgba(207, 15, 87, 0.12);
+  background: linear-gradient(145deg, hsla(338, 86%, 44%, 0.04), hsla(0, 0%, 100%, 0.01));
+  color: color.$color-text-muted;
+  pointer-events: none;
+}
+
+.uploadZone[data-dragover="true"] {
+  filter: brightness(1.5);
+}
+
+.uploadIcon {
+  width: 44px;
+  height: 44px;
+  color: color.$color-text-muted;
+  transition: 100ms;
+
+  .uploadZone:hover & {
+    color: color.$color-text-muted;
+    opacity: 0.9;
+  }
+
+  .uploadZone[data-dragover="true"] & {
+    color: color.$color-accent;
+    opacity: 0.95;
+  }
+
+  .uploadZone[data-blocked="true"] & {
+    color: color.$color-text-muted;
+    opacity: 0.8;
+  }
+}
+
+.uploadInput {
+  display: none;
+}
+
+.relativeWrapper {
+  position: relative;
+}
+
+.hashSelectTrigger {
+  width: 100%;
+  // min-height: 38px;
+  border-radius: 0;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+  box-sizing: content-box;
+  padding-block: 7px;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.hashSelectTrigger:hover {
+  border-color: color.$color-accent-soft;
+}
+
+.hashSelectTrigger:focus-visible {
+  border-color: color.$color-accent-soft;
+  box-shadow: 0 0 0 3px rgba(207, 15, 87, 0.22);
+  transform: translateY(-1px);
+}
+
+.hashSelectIcon {
+  color: color.$color-accent;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.hashSelectTrigger :global([data-placeholder]) {
+  color: color.$color-text-muted;
+}
+
+.hashSelectContent {
+  background: color.$color-surface;
+  border: 1px solid color.$color-border;
+  box-shadow: color.$shadow-elevated;
+  border-radius: 0;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.hashSelectViewport {
+  padding: 6px;
+  display: grid;
+  gap: 4px;
+}
+
+.hashSelectItem {
+  color: color.$color-text-main;
+  border-radius: 0;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  outline: none;
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  font-style: normal;
+}
+
+.hashSelectItem[data-highlighted] {
+  background: rgba(207, 15, 87, 0.16);
+}
+
+.hashSelectItem[data-state="checked"] {
+  background: color.$color-chip-bg;
+}
+
+.hashSelectItemIndicator {
+  color: color.$color-accent-soft;
+  font-size: 12px;
+}
+
+.fileStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fileStatusIcon {
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fileStatusSpinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid color.$color-accent-2;
+  border-top-color: color.$color-accent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.9s linear infinite;
+}
+
+.fileStatusCheck {
+  color: color.$color-accent-soft;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.fileStatusText {
+  color: color.$color-text-muted;
+  font-size: 14px;
+}

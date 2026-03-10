@@ -1,0 +1,12 @@
+{
+    "hash_module": {
+        "algorithm": [
+            "default",
+            "optimized"
+        ],
+        "algorithm_src": [
+            "libmd5_service.so",
+            "libmd5_service_opt.so"
+        ]
+    }
+}
