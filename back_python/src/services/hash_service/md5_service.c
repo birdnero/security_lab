@@ -6,10 +6,11 @@
 #include <sys/types.h>
 
 #define leftrotate(x, n) (((x) << (n)) | ((x) >> (32 - (n))))
+#define MD5_BLOCK_SIZE 64
 
 typedef struct {
     uint32_t A, B, C, D;
-    uint8_t buffer[64];
+    uint8_t buffer[MD5_BLOCK_SIZE];
     size_t buffer_len;
     uint64_t total_len;
 } Context;
@@ -75,23 +76,23 @@ void md5_update(Context* ctx, const uint8_t* data, size_t len) {
     ctx->total_len += len;
 
     if (ctx->buffer_len > 0) {
-        size_t take = 64 - ctx->buffer_len;
+        size_t take = MD5_BLOCK_SIZE - ctx->buffer_len;
         if (take > len) take = len;
         memcpy(ctx->buffer + ctx->buffer_len, data, take);
         ctx->buffer_len += take;
         data += take;
         len -= take;
 
-        if (ctx->buffer_len == 64) {
+        if (ctx->buffer_len == MD5_BLOCK_SIZE) {
             hash_data_md5(ctx->buffer, &ctx->A, &ctx->B, &ctx->C, &ctx->D);
             ctx->buffer_len = 0;
         }
     }
 
-    while (len >= 64) {
+    while (len >= MD5_BLOCK_SIZE) {
         hash_data_md5(data, &ctx->A, &ctx->B, &ctx->C, &ctx->D);
-        len -= 64;
-        data += 64;
+        len -= MD5_BLOCK_SIZE;
+        data += MD5_BLOCK_SIZE;
     }
 
     if (len > 0) {
@@ -103,13 +104,13 @@ void md5_update(Context* ctx, const uint8_t* data, size_t len) {
 void md5_final(Context* ctx, uint8_t out[16]) {
     ctx->buffer[ctx->buffer_len++] = 0x80;
     if (ctx->buffer_len > 56) {
-        memset(ctx->buffer + ctx->buffer_len, 0x00, 64 - ctx->buffer_len);
+        memset(ctx->buffer + ctx->buffer_len, 0x00, MD5_BLOCK_SIZE - ctx->buffer_len);
         hash_data_md5(ctx->buffer, &ctx->A, &ctx->B, &ctx->C, &ctx->D);
 
         ctx->buffer_len = 0;
     }
 
-    memset(ctx->buffer + ctx->buffer_len, 0x00, 64 - ctx->buffer_len);
+    memset(ctx->buffer + ctx->buffer_len, 0x00, MD5_BLOCK_SIZE - ctx->buffer_len);
     ctx->total_len *= 8;
     for (size_t i = 0; i < 8; i++) ctx->buffer[56 + i] = (ctx->total_len >> (8 * i)) & 0xff;
 
