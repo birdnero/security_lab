@@ -1,19 +1,21 @@
 export const SERVER_URL_STORAGE_KEY = "security_lab_server_url"
 export const DEFAULT_API_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? "https://security-lab-one.vercel.app/"
-export const TAB_NAMES = ["Main", "Random", "Hash"] as const
+export const TAB_NAMES = ["Main", "Random", "Hash", "Encryption"] as const
 
 export type TabName = typeof TAB_NAMES[number]
 
 const TAB_PATHS: Record<TabName, string> = {
     Main: "/",
     Random: "/random",
-    Hash: "/hash"
+    Hash: "/hash",
+    Encryption: "/encryption"
 }
 
 const TAB_PAGE_TITLES: Record<TabName, string> = {
     Main: "Pick-me Security 🌸",
     Random: "Pseudo-Random Generator 🍭",
-    Hash: "Speed-light hash evaluator 😈"
+    Hash: "Speed-light hash evaluator 😈",
+    Encryption: "RC5 encryption lab"
 }
 
 const isLikelyLocalHost = (value: string) => {

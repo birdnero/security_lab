@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.config.config import ROOT_DIR
 from src.controllers.random_controller import router as random_router
 from src.controllers.hash_controller import router as hash_router
+from src.controllers.encrypt_controller import router as encrypt_router
 
 FRONTEND_DIST_DIR = ROOT_DIR / "web" / "dist"
 # FRONTEND_INDEX = FRONTEND_DIST_DIR / "index.html"
@@ -31,6 +32,7 @@ app.add_middleware(
 
 app.include_router(random_router)
 app.include_router(hash_router)
+app.include_router(encrypt_router)
 
 
 @app.get("/health")

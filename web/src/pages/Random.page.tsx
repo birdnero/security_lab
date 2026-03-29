@@ -1,4 +1,4 @@
-import styles from "../random/module.random.module.scss"
+import styles from "../shared/module.ui.module.scss"
 import RandomProvider from "../random/provider.random"
 import ConfigSection from "../random/components/ConfigSection"
 import ControlsSection from "../random/components/ControlsSection"

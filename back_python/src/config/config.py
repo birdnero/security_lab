@@ -1,8 +1,6 @@
 import json
 from pathlib import Path
-from typing import Annotated
-from annotated_types import Len
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel
 
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -13,8 +11,30 @@ class HashConfig(BaseModel):
     algorithm_src: list[str]
 
 
+class Rc5Config(BaseModel):
+    w: int
+    rounds: int
+    key_length: int
+    key_hex: str | None = None
+
+
+class Rc5IvConfig(BaseModel):
+    x0: int
+    m: int
+    a: int
+    c: int
+
+
+class EncryptionConfig(BaseModel):
+    rc5: Rc5Config
+    rc5_iv_rng: Rc5IvConfig
+    max_upload_size_bytes: int
+    passphrase: str | None = None
+
+
 class Config(BaseModel):
     hash_module: HashConfig
+    encryption_module: EncryptionConfig
 
 
 _config: Config | None = None

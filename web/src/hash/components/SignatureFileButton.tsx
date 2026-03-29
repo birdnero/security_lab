@@ -1,16 +1,17 @@
 import { useId } from "react"
 import type { ChangeEvent } from "react"
 import { useHash } from "../use-hash.hash"
-import styles from "../../random/module.random.module.scss"
+import styles from "../../shared/module.ui.module.scss"
 import FileSignatureIcon from "./FileSignatureIcon"
 
 type UploadFileButtonProps = {
     disabled?: boolean
+    label?: string
 }
 
 const EXPECTED_SIGNATURE_SIZE = 32
 
-const SignatureFileButton = ({ disabled }: UploadFileButtonProps) => {
+const SignatureFileButton = ({ disabled, label = "Upload signature" }: UploadFileButtonProps) => {
     const { setSignatureValue } = useHash()
     const inputId = useId()
 
@@ -37,8 +38,8 @@ const SignatureFileButton = ({ disabled }: UploadFileButtonProps) => {
         <label
             className={styles.signatureFileButton}
             htmlFor={inputId}
-            title="Upload signature"
-            aria-label="Upload signature"
+            title={label}
+            aria-label={label}
             aria-disabled={disabled ? "true" : "false"}
         >
             <FileSignatureIcon className={styles.saveIcon} />

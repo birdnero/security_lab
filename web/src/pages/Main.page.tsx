@@ -6,6 +6,7 @@ import styles from "../main/module.main.module.scss"
 import { pageTitleResolve } from "../main/utils.main"
 import RandomPage from "./Random.page"
 import HashPage from "./Hash.page"
+import EncryptionPage from "./Encryption.page"
 
 const MainPage = () => {
     const { pathname } = useLocation()
@@ -45,6 +46,7 @@ const MainPage = () => {
                     </section>} />
                     <Route path="/random" element={<RandomPage />} />
                     <Route path="/hash" element={<HashPage />} />
+                    <Route path="/encryption" element={<EncryptionPage />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </div>

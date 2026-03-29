@@ -1,5 +1,5 @@
 import { useRandom } from "../use-random.random"
-import styles from "../module.random.module.scss"
+import styles from "../../shared/module.ui.module.scss"
 
 const ActionBar = () => {
     const { onGenerate, onChizaru, onSequencePeriod, onCompare } = useRandom()

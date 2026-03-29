@@ -1,35 +1,24 @@
 import { useId, useState } from "react"
-import { useHash } from "../use-hash.hash"
 import styles from "../../shared/module.ui.module.scss"
-import UploadIcon from "./UploadIcon"
-import SignatureFileButton from "./SignatureFileButton"
-import { formatBytes } from "../utils.hash"
+import UploadIcon from "../../hash/components/UploadIcon"
+import { useEncryption } from "../use-encryption.encryption"
+import { formatBytes } from "../../hash/utils.hash"
 
-type FileSectionProps = {
+type EncryptionFileSectionProps = {
     title?: string
     description?: string
-    signatureButtonLabel?: string
-    signatureUploadedLabel?: string
 }
 
-const FileSection = ({
+const EncryptionFileSection = ({
     title = "File",
-    description = "Upload a file and optionaly signature to compute its hash.",
-    signatureButtonLabel,
-    signatureUploadedLabel = "Signature uploaded"
-}: FileSectionProps) => {
-    const { selectedFile, setSelectedFile, isFileHashing, signatureValue, hashResult } = useHash()
+    description = "Upload a file to process it."
+}: EncryptionFileSectionProps) => {
+    const { selectedFile, setSelectedFile, isProcessingFile } = useEncryption()
     const inputId = useId()
     const [isDragActive, setIsDragActive] = useState(false)
-    const compareStatus =
-        !isFileHashing && selectedFile && signatureValue && hashResult?.hash
-            ? (hashResult.hash === signatureValue ? "success" : "error")
-            : "none"
-
-    const fileNameLength = signatureValue ? 20 : 40
 
     return (
-        <section className={styles.panel} color-status={compareStatus}>
+        <section className={styles.panel}>
             <div className={styles.sectionTitle}>{title}</div>
             <div className={styles.sectionText}>{description}</div>
             <div className={styles.inputGrid}>
@@ -37,25 +26,25 @@ const FileSection = ({
                     <label
                         className={styles.uploadZone}
                         htmlFor={inputId}
-                        data-blocked={isFileHashing ? "true" : "false"}
+                        data-blocked={isProcessingFile ? "true" : "false"}
                         data-dragover={isDragActive ? "true" : "false"}
                         onDragEnter={() => {
-                            if (isFileHashing) return
+                            if (isProcessingFile) return
                             setIsDragActive(true)
                         }}
                         onDragOver={(event) => {
-                            if (isFileHashing) return
+                            if (isProcessingFile) return
                             event.preventDefault()
                             setIsDragActive(true)
                         }}
                         onDrop={(event) => {
-                            if (isFileHashing) return
+                            if (isProcessingFile) return
                             event.preventDefault()
                             setIsDragActive(false)
                             setSelectedFile(event.dataTransfer.files?.[0] ?? null)
                         }}
                         onDragLeave={(event) => {
-                            if (isFileHashing) return
+                            if (isProcessingFile) return
                             const relatedTarget = event.relatedTarget as Node | null
                             if (!relatedTarget || !event.currentTarget.contains(relatedTarget)) {
                                 setIsDragActive(false)
@@ -64,40 +53,37 @@ const FileSection = ({
                     >
                         <UploadIcon className={styles.uploadIcon} />
                     </label>
-                    <SignatureFileButton disabled={isFileHashing} label={signatureButtonLabel} />
 
                     <input
                         id={inputId}
                         className={styles.uploadInput}
                         type="file"
-                        disabled={isFileHashing}
+                        disabled={isProcessingFile}
                         onChange={event => setSelectedFile(event.target.files?.[0] ?? null)}
                     />
                 </div>
+
                 <div className={styles.fileStatus}>
                     {selectedFile ? (
                         <>
                             <span className={styles.fileStatusIcon}>
-                                {isFileHashing ? (
+                                {isProcessingFile ? (
                                     <span className={styles.fileStatusSpinner} />
                                 ) : (
                                     <span className={styles.fileStatusCheck}>✓</span>
                                 )}
                             </span>
-                            <span className={styles.fileStatusText}>Selected:
-                                {" " + formatBytes(selectedFile.size) + " "}
-                                {selectedFile.name.slice(0, fileNameLength) + (selectedFile.name.length > fileNameLength ? "..." : "")}</span>
+                            <span className={styles.fileStatusText}>
+                                Selected: {" " + formatBytes(selectedFile.size) + " "}
+                                {selectedFile.name.slice(0, 40) + (selectedFile.name.length > 40 ? "..." : "")}
+                            </span>
                         </>
                     ) : null}
-                    {!!signatureValue && <>
-                        <span></span>
-                        <span className={styles.fileStatusCheck}>✓</span>
-                        <span className={styles.fileStatusText}>{signatureUploadedLabel}</span>
-                    </>}
+
                 </div>
             </div>
         </section>
     )
 }
 
-export default FileSection
+export default EncryptionFileSection

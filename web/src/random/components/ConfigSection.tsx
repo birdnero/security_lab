@@ -1,6 +1,6 @@
 import Input from "../../shared/input.shared"
 import { useRandom } from "../use-random.random"
-import styles from "../module.random.module.scss"
+import styles from "../../shared/module.ui.module.scss"
 
 const ConfigSection = () => {
     const { config, setConfigField } = useRandom()

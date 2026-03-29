@@ -1,10 +1,16 @@
 import { useHash } from "../use-hash.hash"
-import styles from "../../random/module.random.module.scss"
-import DownloadIcon from "../../random/components/DownloadIcon"
+import styles from "../../shared/module.ui.module.scss"
+import DownloadIcon from "../../shared/components/DownloadIcon"
 
 const DEFAULT_HASH_FILENAME = "hash"
+const DEFAULT_LABEL = "Save hash"
 
-const SaveHashButton = () => {
+type SaveHashButtonProps = {
+    label?: string
+    filename?: string
+}
+
+const SaveHashButton = ({ label = DEFAULT_LABEL, filename = DEFAULT_HASH_FILENAME }: SaveHashButtonProps) => {
     const { hashResult } = useHash()
 
     if (!hashResult?.hash) {
@@ -17,7 +23,7 @@ const SaveHashButton = () => {
 
         const link = document.createElement("a")
         link.href = url
-        link.download = DEFAULT_HASH_FILENAME
+        link.download = filename
         document.body.append(link)
         link.click()
         link.remove()
@@ -29,8 +35,8 @@ const SaveHashButton = () => {
             type="button"
             className={styles.saveFloatingButton}
             onClick={handleSave}
-            title="Save hash"
-            aria-label="Save hash"
+            title={label}
+            aria-label={label}
         >
             <DownloadIcon className={styles.saveIcon} />
         </button>

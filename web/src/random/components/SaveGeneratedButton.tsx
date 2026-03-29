@@ -1,7 +1,7 @@
 import { useRandom } from "../use-random.random"
-import styles from "../module.random.module.scss"
+import styles from "../../shared/module.ui.module.scss"
 import type { GenConfig } from "../types.random"
-import DownloadIcon from "./DownloadIcon"
+import DownloadIcon from "../../shared/components/DownloadIcon"
 
 const DOWNLOAD_FILENAME = "gen_numbers.txt"
 

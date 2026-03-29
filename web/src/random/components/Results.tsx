@@ -1,6 +1,6 @@
 import type { BitBalanceResponse } from "../types.random"
 import { useRandom } from "../use-random.random"
-import styles from "../module.random.module.scss"
+import styles from "../../shared/module.ui.module.scss"
 import SaveGeneratedButton from "./SaveGeneratedButton";
 
 const BalanceCard = ({ title, value }: { title: string; value: BitBalanceResponse | null }) => (

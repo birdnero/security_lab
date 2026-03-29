@@ -8,5 +8,20 @@
             "libmd5_service.so",
             "libmd5_service_opt.so"
         ]
+    },
+    "encryption_module": {
+        "rc5": {
+            "w": 32,
+            "rounds": 12,
+            "key_length": 16
+        },
+        "rc5_iv_rng": {
+            "x0": 13,
+            "m": 67108865,
+            "a": 17,
+            "c": 1
+        },
+        "max_upload_size_bytes": 1000000000,
+        "passphrase": "pickme banana"
     }
 }
